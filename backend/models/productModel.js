@@ -14,12 +14,11 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter product description"],
     },
-    price: {
+    price:{
       type: Number,
       required: [true, "Please enter product price"],
-    },
-   
-    images: [
+    },   
+    images:[
       {
         public_id: {
           type: String,
@@ -37,6 +36,11 @@ const productSchema = new mongoose.Schema(
         values: [
           "Electronics",
           "Fashion",
+          "Cars",
+          "Laptop",
+          "Desktop",
+          "Camera",
+          "Toys",
           
         ],
         required:[true, "Plese select correct category"],
