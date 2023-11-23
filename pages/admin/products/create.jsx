@@ -3,6 +3,7 @@ import * as yup from "yup";
 import { H3 } from "components/Typography";
 import { ProductForm } from "pages-sections/admin";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard"; // =============================================================================
+import axios from "axios";
 
 CreateProduct.getLayout = function getLayout(page) {
   return <VendorDashboardLayout>{page}</VendorDashboardLayout>;
@@ -25,10 +26,16 @@ export default function CreateProduct() {
     stock: yup.number().required("required"),
     price: yup.number().required("required"),
     sale_price: yup.number().required("required"),
-    tags: yup.object().required("required"),
+    tags: yup.object(),
   });
 
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = async() => {
+    
+    const data = {title, description, category, sale_price, stock, price, tags};
+    const response = await axios.get('/api/products', data);
+    console.log(response);
+
+  };
 
   return (
     <Box py={4}>

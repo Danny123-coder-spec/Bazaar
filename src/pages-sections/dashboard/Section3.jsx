@@ -1,3 +1,4 @@
+
 import dynamic from "next/dynamic";
 import { Box, Grid, useTheme } from "@mui/material";
 import Card2 from "./Card2";
@@ -7,6 +8,7 @@ import { currency } from "lib"; // apext chart instance
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
+
 
 const Section3 = () => {
   const theme = useTheme(); // weekly chart series

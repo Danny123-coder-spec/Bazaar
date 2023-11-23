@@ -5,4 +5,7 @@ module.exports = {
     theme: "DEFAULT",
     currency: "USD",
   },
+  env:{
+    DB_URI: "mongodb+srv://bazaar:bazaar@bazaar.pzlzg0e.mongodb.net/bazaar"
+  }
 };

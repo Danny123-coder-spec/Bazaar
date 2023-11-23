@@ -1,0 +1,8 @@
+{
+    "name": "Sample Product",
+    "category": "Electronics",
+    "price": 499.99,
+    "description": "This is a sample product description.",
+    "seller": "Sample Seller Inc.",
+    "stock": 100
+  }
