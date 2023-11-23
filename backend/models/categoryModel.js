@@ -1,17 +1,29 @@
+
 import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    subcategories: [{
-      name: { type: String, required: true },
-      subcategories: [{
-        name: { type: String, required: true },
-        
-      }],
-      
-    }],
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
-  });
+  subCategory: {
+    type: String,
+    required: true,
+  },
+  parentCategory: {
+    type: String,
+    required: true,
+    enum:[
+      "Electronics",
+      "Fashion"
+    ],
+  },
+  imageUrl: [
+    {
+      public_id: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
+  ],
+}, { timestamps: true });
 
-export default  mongoose.models.Category || mongoose.model('Category', categorySchema)
+export default mongoose.models.Category || mongoose.model('Category', categorySchema);

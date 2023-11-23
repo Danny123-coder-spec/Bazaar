@@ -1,77 +1,75 @@
-import { Category } from "../models/categoryModel";
+
+import Category from "../models/categoryModel";
 
 // Create a new Category
 
 const createCategory = async (req, res) => {
+    // try {
     try {
-        const {name, subcategories} = req.body;
 
-        const newCategory = new Category({
-            name,
-            subcategories,
-        });
-
+        const newCategory = await Category.create(req.body);
+        res.json(newCategory);
         await newCategory.save();
-
-        res.status(201).json({message:'Category created successfully'});
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({error:'Internal Sever Error'});
-    }
-};
-
-// Create a new Product with a specific category and subcategory
-
-const createProduct = async (req, res) => {
-    try {
-        const {name, category, subcategory, price} = req.body;
-
-        // Find the category by name
-        const foundCategory = await Category.findOne({name:category});
-
-        if(!foundCategory) {
-            return res.status(404).json({error:'Category not found'});
+        if (newCategory) {
+            res.json({ message: 'Category Created Successully', status: 200 })
+        } else {
+            res.json({ status: 400, error: 'Failed to created Category' })
         }
-
-        // Find the subcategory within the category
-
-        const foundSubCategory = foundCategory.subcategories.find(sub => sub.name === subcategory);
-
-        if(!foundSubCategory){
-            return res.status(404).json({error:'Subcategory not found in the specific category'});
-        };
-
-        const newProduct = new Product({
-            name,
-            category:{
-                name:foundCategory.name,
-                subcategory:foundSubCategory.name,
-            },
-            price,
-        });
-
-        await newProduct.save();
-
-        res.status(201).json({message:'Product created Successfully', product:newProduct})
-        
     } catch (error) {
-        console.error(error);
-        res.status(500).json({error:'Internal Server Error'});
-        
+        res.json({ message: 'Internal Server Error' })
+        throw new Error(error);
+
     }
 };
 
-// Get all categories
+// Get A Category
 
-const getAllCategories = async(req, res) => {
-    try {
-        const categories = await Category.find();
-        res.status(200).json(categories);
-        
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({error:'Internal Server error'})
-    }
+const getaCategory = async(req, res) => {
+    const id = req?.query?.pid
+  // console.log(req?.query) 
+  console.log(id)
+  try {
+    const findCategory = await Category.findById(id);
+    return res.json(findCategory);
+  } catch (error) {
+    throw new Error(error);
+    
+  }
 }
 
-export {createCategory,createProduct, getAllCategories};
+// Update Category
+
+const updateCategory = async(req, res) => {
+    const id = req?.query?.pid
+    console.log(id)
+    try {
+      const updatedCategory = await Category.findByIdAndUpdate(
+        id,
+        req.body,
+        { new: true }
+      );
+      if (!updatedCategory) {
+        return res.status(404).json({ error: "Category not found" });
+      }
+      res.json(updatedCategory);
+  
+      console.log(id)
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server error" });
+    }
+}
+ 
+
+
+const getAllCategories = async (req, res) => {
+    try {
+        const getAllCategories = await Category.find();
+        res.json(getAllCategories);
+      } catch (error) {
+        res.status(500).json({message:'Something went wrong!Please try again'})
+        throw new Error(error);
+      }
+}
+
+export { createCategory, getAllCategories, updateCategory, getaCategory };

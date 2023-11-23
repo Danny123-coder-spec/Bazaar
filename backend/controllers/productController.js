@@ -1,17 +1,8 @@
 import Product from "../models/productModel";
-import slugify from 'slugify'
-// Creating a new Product
 
 const createProduct = async (req, res) => {
-  //   console.log(req?.body);
+  
   try {
-    if(req.body.title) {
-      req.body.slug = slugify(req.body.title); 
-    }
-
-    // const slug = slugify(req.body.title, { lower: true });
-    // res.json(slug);
-
     const newProduct = await Product.create(req.body);
     res.json(newProduct);
     await newProduct.save();
@@ -33,12 +24,15 @@ const createProduct = async (req, res) => {
 
 // Get a product
 const getaProduct = async(req, res) => {
-  const {id} = req.params;
+
+  const id = req?.query?.pid
+  // console.log(req?.query) 
+  console.log(id)
   try {
     const findProduct = await Product.findById(id);
-    res.json(findProduct) 
+    return res.json(findProduct);
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
     
   }
 }
@@ -49,6 +43,7 @@ const getAllProducts = async (req, res) => {
     const getAllProducts = await Product.find();
     res.json(getAllProducts);
   } catch (error) {
+    res.status(500).json({message:'Something went wrong!Please try again'})
     throw new Error(error);
   }
 };
@@ -56,20 +51,21 @@ const getAllProducts = async (req, res) => {
 // Update a product by ID
 
 const updateProductById = async (req, res) => {
-  const { productId } = req.params;
-
+ 
+  const id = req?.query?.pid
+  console.log(id)
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
-      productId,
+      id,
       req.body,
       { new: true }
     );
-
     if (!updatedProduct) {
       return res.status(404).json({ error: "Product not found" });
     }
+    res.json(updatedProduct);
 
-    res.status(200).json(updatedProduct);
+    console.log(id)
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server error" });
@@ -79,13 +75,14 @@ const updateProductById = async (req, res) => {
 // Delete a product by ID
 
 const deleteProductById = async (req, res) => {
-  const { productId } = req.params;
+  const Id  = req.params;
   try {
-    const deletedProduct = await Product.findByIdAndDelete(productId);
+    const deletedProduct = await Product.findByIdAndDelete(Id);
 
     if (!deletedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
+    res.json(deletedProduct);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Sever Error" });
@@ -100,15 +97,3 @@ export {
   deleteProductById,
 };
 
-
-// const { title, category, price, description, seller, stock } = req?.body;
-
-    // const newProduct = new Product({ ...req?.body });
-
-    // const savedProduct = await newProduct.save();
-
-    // if (savedProduct) {
-    //   res.json({ message: "Product created successfully", status: 200});
-    // } else {
-    //   res.json({ status: 400, error: "Failed to save the product" });
-    // } 
