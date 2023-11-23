@@ -1,6 +1,6 @@
 import {createRouter} from 'next-connect'
-import { getAllProducts } from '../../../../backend/controllers/productController';
 import dbConnect from '../../../../backend/config/dbConfig';
+import { getAllProducts } from '../../../../backend/controllers/productController';
 
 const router = createRouter();
 

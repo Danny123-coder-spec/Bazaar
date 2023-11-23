@@ -1,11 +1,11 @@
 import { createRouter } from "next-connect";
 import dbConnect from "../../../../backend/config/dbConfig";
-import { deleteProductById } from "../../../../backend/controllers/productController";
+import { getAllCategories } from "../../../../backend/controllers/categoryController";
 
 const router = createRouter();
 
 dbConnect();
 
-router.delete(deleteProductById);
+router.get(getAllCategories)
 
 export default router.handler();

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import dbConnect from "../../../../backend/config/dbConfig";
 import { createProduct } from "../../../../backend/controllers/productController";
 import { Product } from "../../../../backend/models/productModel";
+
 const router = createRouter();
 
 dbConnect();
