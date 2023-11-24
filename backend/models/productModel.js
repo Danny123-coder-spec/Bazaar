@@ -6,10 +6,6 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter product name"],
     },
-    slug: {
-      type: String,
-      required: true,
-    },
     description: {
       type: String,
       required: [true, "Please enter product description"],
@@ -80,6 +76,6 @@ const productSchema = new mongoose.Schema(
 );
 
 export default mongoose.models.Product ||
-  mongoose.model("Product", productSchema);
+mongoose.model("Product", productSchema);
 
 

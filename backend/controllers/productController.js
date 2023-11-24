@@ -64,7 +64,6 @@ const updateProductById = async (req, res) => {
       return res.status(404).json({ error: "Product not found" });
     }
     res.json(updatedProduct);
-
     console.log(id)
   } catch (error) {
     console.error(error);
@@ -75,17 +74,16 @@ const updateProductById = async (req, res) => {
 // Delete a product by ID
 
 const deleteProductById = async (req, res) => {
-  const Id  = req.params;
+ 
+  const id = req?.query?.pid
+  // console.log(req?.query) 
+  console.log(id)
   try {
-    const deletedProduct = await Product.findByIdAndDelete(Id);
-
-    if (!deletedProduct) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-    res.json(deletedProduct);
+    const findProduct = await Product.findByIdAndDelete(id);
+    return res.json(findProduct);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Sever Error" });
+    throw new Error(error);
+    
   }
 };
 

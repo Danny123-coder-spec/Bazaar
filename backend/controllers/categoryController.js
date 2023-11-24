@@ -67,9 +67,21 @@ const getAllCategories = async (req, res) => {
         const getAllCategories = await Category.find();
         res.json(getAllCategories);
       } catch (error) {
-        res.status(500).json({message:'Something went wrong!Please try again'})
+        res.status(500).json({message:'Something went wrong!Please try again'});
         throw new Error(error);
       }
 }
 
-export { createCategory, getAllCategories, updateCategory, getaCategory };
+// Delete a category
+
+const deleteaCategory = async(req, res) => {
+  const id = req?.query?.pid;
+  try {
+    const deletedCategory = await Category.findByIdAndDelete(id);
+    res.json(deletedCategory);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export { createCategory, getAllCategories, updateCategory, getaCategory, deleteaCategory };
