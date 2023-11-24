@@ -1,6 +1,6 @@
 import { createRouter } from "next-connect";
 import dbConnect from "../../../../backend/config/dbConfig";
-import { getaProduct, updateProductById } from "../../../../backend/controllers/productController";
+import { deleteProductById, getaProduct, updateProductById } from "../../../../backend/controllers/productController";
 
 
 const router = createRouter();
@@ -9,5 +9,6 @@ dbConnect();
 
 router.put(updateProductById)
 router.get(getaProduct)
+router.delete(deleteProductById);
 
 export default router.handler();
